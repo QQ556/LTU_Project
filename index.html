@@ -1,0 +1,98 @@
+﻿<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+
+<style type="text/css">
+@import url(css.css);
+</style>
+<?php
+  $passed=$_COOKIE["passed"];
+  /*  如果 cookie 中的 passed 變數不等於 TRUE
+      表示尚未登入網站，將使用者導向首頁 index.html  */
+  if ($passed != "TRUE")
+  {
+    header("location:index.html");
+    exit();
+  }
+  else
+  {
+    require_once("dbtools.inc.php");
+    $id = $_COOKIE{"id"}; 
+     }  
+    $link = create_connection();
+        
+    //執行 SELECT 陳述式取得使用者資料
+    $sql = "SELECT * FROM users Where id = $id";
+    $result = execute_sql($link, "member", $sql);
+    $row = mysqli_fetch_assoc($result); ?>  
+    
+
+<!doctype html>
+<html>
+  <head>
+    <title>後台網站</title>
+    <script type="text/javascript">
+      
+
+      
+      function check_data()
+      {
+        if (document.myForm.account.value.length == 0)
+          alert("帳號欄位不可以空白哦！");
+        else if (document.myForm.password.value.length == 0)
+          alert("密碼欄位不可以空白哦！");
+        else 
+          myForm.submit();
+      }
+    </script>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="Base_Visitor">
+      <div class="Head">
+        <a class="Logo" ></a>
+      </div>
+    <div class="Body">
+        <div class="NavPanel">
+        <form action="checkpwd.php" method="post" name="myForm">
+    <table align="center">
+      <tr>
+        <td align="center"><img src="member.jpg"></td>
+      </tr>
+    <table align="center"> 
+      <table width="100%" align="center" border="0">
+        <tr> 
+          <td align="center"> 
+            <i class="fa fa-user" style="color:#3333FF" aria-hidden="true"></i>
+            <font color="#3333FF" size="6">帳號:</font> 
+            <input name="account" style="padding:10px;height: 40px;font-size: 23px;box-sizing: border-box;color:#3333FF;" type="text" size="15" placeholder="請輸入員工帳號 ">
+          </td>
+        </tr>
+        <tr> 
+          <td align="center"> 
+            <i class="fas fa-unlock" style="color:#3333FF"></i>
+            <font color="#3333FF" size="6">密碼:</font> 
+            <input name="password" style="padding:10px;height: 40px;font-size: 23px;box-sizing: border-box;" type="password" size="15"  placeholder="請輸入員工密碼 ">
+          </td>
+        </tr>
+        <tr>
+          <td align="center"> 
+            
+            <input type="button" value="登入" onClick="check_data()" style="background-color:#FF0000;border-radius: 10px;width:100px;height: 52px;margin: 20px auto;font-size: 19px;letter-spacing: 1px;color: white;">  
+
+
+
+
+            <input type="reset" value="重填" style="background-color:#FF0000;border-radius: 10px;width:100px;height: 52px;margin: 20px auto;font-size: 19px;letter-spacing: 1px;color: white;">
+          </td>
+        </tr>
+      </table>
+    </form>
+        </div>
+
+    </div>
+  </div>
+
+
+
+
+    </body>
+</html>
