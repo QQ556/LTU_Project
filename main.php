@@ -11,7 +11,7 @@ function getToday(){
 	$year=$today["year"]; //年 
 	$month=$today["mon"]; //月
 	$day=$today["mday"];  //日
- 
+ 	//若月或日為個位數 補零
 	if(strlen($month)=='1')$month='0'.$month;
 	if(strlen($day)=='1')$day='0'.$day;
 	$today="'".$year."-".$month."-".$day."%'";
