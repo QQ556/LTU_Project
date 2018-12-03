@@ -23,7 +23,7 @@
 // }
 </script>
 <style type="text/css">
-/*@import url(css.css);*/
+@import url(css.css);
 tr:nth-child(even) {
     background: #CCC
 }
@@ -105,7 +105,8 @@ float:left;
     @$select_month=$_GET['select_month'];
     @$select_year=$_GET['select_year'];
     //有填值的SQL
-    @$sql = "select `clock_in` 上班, `clock_out` 下班 FROM `punch card` WHERE `id`=".$search_id." "."AND (`clock_in` like '$search%' OR `clock_out` like '$search%')";
+
+    // @$sql = "select `clock_in` 上班, `clock_out` 下班 FROM `punch card` WHERE `id`=".$search_id." "."AND (`clock_in` like '$search%' OR `clock_out` like '$search%')";
     
 
     }else{
@@ -141,6 +142,7 @@ float:left;
    
     //取select紀錄值
     $select_value = isset($_GET['select_month']) ? $_GET['select_month'] : '';
+    $select_year = isset($_GET['select_year']) ? $_GET['select_year'] : '';
     
 
     
@@ -197,8 +199,7 @@ float:left;
                  <option value="11" <?php echo $select_month == '11' ? 'selected' : '' ?>>11月</option>
                  <option value="12" <?php echo $select_month == '12' ? 'selected' : '' ?>>12月</option>
                 </select>
-              <?php echo $select_month == 'option1' ? 'selected' : '' ?>
-              <?php echo $select_year == 'option1' ? 'selected' : '' ?>
+              
 
 
 
@@ -208,6 +209,7 @@ float:left;
           <table width="100%" border="1" class="order-table" align="right">
             <h1 align="center">月打卡表</h1>
                 <tr>
+                  <td>年份</td>
                   <td>月份</td>
                   <td>日期</td>
                   <td>最早打卡</td>
@@ -226,15 +228,45 @@ float:left;
     $result_last = execute_sql($link, "member", $sql_last);
     $row_last = mysqli_fetch_assoc($result_last);
     $result_fast = execute_sql($link, "member", $sql_fast);
-    $row_fast = mysqli_fetch_assoc($result_fast);
-    echo $sql_fast;
+    $row_fast = mysqli_fetch_assoc($result_fast);   
+    // date("d",strtotime($row_last["last"]))
           ?>
             <tr>
+              <td><?php echo $select_year ?></td>
               <td><?php echo $select_month ?></td>
               <td><?php echo $i ?></td>
-              <td><?php echo $row_fast["fast"]; ?></td>
-              <td><?php echo $row_last["last"]; ?></td>
-              <td></td>
+              <td>
+                <?php IF($row_fast["fast"]!=""){
+                echo date("H：i：s",strtotime($row_fast["fast"]));
+                } 
+                else{
+                  echo "無資料";
+                }
+
+                  ?></td>
+              <td>
+                <?php IF($row_last["last"]!=""){
+                echo date("H：i：s",strtotime($row_last["last"]));
+                } 
+                else{
+                  echo "無資料";
+                }
+
+                  ?></td>
+        <!-- echo (strtotime($time1) - strtotime($time2))/ (60*60); //計算相差之小時數 -->
+        <!-- $a=round(傳數值,[位數]) -->
+              <td><?php 
+              if($row_last["last"] and $row_fast["fast"] !=""){
+              $time=(strtotime($row_last["last"]) - strtotime($row_fast["fast"]))/ 60;
+              $hour=round($time,2);
+              echo  $hour."分鐘";
+              }
+              else{
+              echo "資料不全";
+             }
+
+              ?>
+              </td>
               <td></td>
             </tr>
           <?php
