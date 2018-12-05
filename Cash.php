@@ -98,8 +98,6 @@ $passed=$_COOKIE["passed"];
     $total_fields=mysqli_num_fields($result); // 取得欄位數
     $total_records=mysqli_num_rows($result);  // 取得記錄數
     ?>
-    測試用總記錄數<?php echo "$total_fields"; ?>
-    測試用總欄位數<?php echo "$total_records"; ?>
 
     <!doctype html>
     <html>
@@ -110,69 +108,40 @@ $passed=$_COOKIE["passed"];
     <body>
       <div id="Base_Visitor" style="width: 1400px">
         <div class="Head">
-           <a class="Logo" href="main.php" ></a>
-        </div>
-        <div class="Body">
-          <div class="NavPanel">
-            <a class="Item" href="join.html" target="_top">新增員工</a>      
-          </div>
-          <div class="post">
-            搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">  
-          </div>
-          <table width="100%" border="1" class="order-table" style="font-size: 15" >
-            <thead>
-              <tr>
-                <td>員工號</td>
-                <td>帳號</td>
-                <td>密碼</td>
-                <td>名字</td>
-                <td>職稱</td>
-                <td>所在門市</td>
-                <td>性別</td>
-                <td>出生日</td>
-                <td>電話</td>
-                <td>手機</td>
-                <td>地址</td>
-                <td>電子信箱</td>
-                <td>備註</td>
-                <td>修改</td>
-              </tr>
-            </thead>
+         <a class="Logo" href="main.php"></a>
+       </div>
+       <div class="Body" style="width: 550px;float:left">
+         <h2>來客分析</h2>
+         <h3>性別</h3>
+         <hr/>
+         <input type="submit" name="select_day" class=item6 value = 男>
+         <input type="submit" name="select_day" class=item6 value = 女>
+         <h3>年齡</h3>
+         <hr/>
+         <input type="submit" name="select_day" class=item6 value = 20歲以下>
+         <input type="submit" name="select_day" class=item6 value = 20歲到25歲>
+         <input type="submit" name="select_day" class=item6 value = 25歲到30歲>
+         <input type="submit" name="select_day" class=item6 value = 30歲到40歲>
+         <input type="submit" name="select_day" class=item6 value = 40歲以上>
+         
+       </div>
+       <div class="Body" style="float:left;width: 750px">
+         <h2>點餐畫面</h2>
+         <h3>搜尋點單</h3>
+         <hr/>
+         <br>
+         <h3>櫃台點單</h3>
+         <a class="Item5" align="center" href="Counter_meal.php?code=<?php echo $id ?>">點餐</a>
+         <hr/>
+       </div>
 
-            <?php
-            for($i=1;$i<=mysqli_num_rows($result);$i++){
-              $rs=mysqli_fetch_row($result);
-              ?>
-              <tr>
-                <td><?php echo $rs[0]?></td>
-                <td><?php echo $rs[1]?></td>
-                <td><?php echo $rs[2]?></td>
-                <td><?php echo $rs[3]?></td>
-                <td><?php echo $rs[4]?></td>
-                <td><?php echo $rs[5]?></td>
-                <td><?php echo $rs[6]?></td>
-                <td><?php echo $rs[7]?>.<?php echo $rs[8]?>.<?php echo $rs[9]?></td>
-                <td><?php echo $rs[10]?></td>
-                <td><?php echo $rs[11]?></td>
-                <td><?php echo $rs[12]?></td>
-                <td><?php echo $rs[13]?></td>
-                <td><?php echo $rs[14]?></td>
-                <td><a href="modify-table.php?code=<?php echo $rs[0]?>" >修改</a>
-                  <a href='join.html'onclick="return confirm('確定刪除嗎')">刪除</a>
-                </td>
-              </tr>
-              <?php
-            }
-            ?>
-          </table>
 
-          <table align="right">
-            <tr><td>
-              <input align="right" type ="button" onclick="history.back()" value="回到上一頁" style="background-color:#019e97;border-radius: 10px;width:100px;height: 40px;margin: 20px auto;font-size: 13px;letter-spacing: 1px;color: white;"></input></td></tr>
-            </table>
-          </div>
-        </div>
+
+      
       </div>
-    </body>
-    </html>
+    </div>
+
+  </div>
+</body>
+</html>
 

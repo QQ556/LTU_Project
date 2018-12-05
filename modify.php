@@ -139,7 +139,7 @@ tr, td {
   <body>
     <div id="Base_Visitor">
       <div class="Head">
-        <a class="Logo" ></a>
+         <a class="Logo" href="main.php" ></a>
       </div>
     <div class="Body">
     <form name="myForm" method="post" action="update.php">

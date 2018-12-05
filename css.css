@@ -141,6 +141,43 @@
     text-decoration:none;
 
     }
+.Item5 {background-color:#f00000c7;
+    border-radius: 10px;
+    width:100px;
+    height: 50px;
+    margin: 20px auto;
+    font-size: 120px;
+    letter-spacing: 10px;
+    color: white;
+    line-height: 180px;
+    text-decoration:none;
+
+    }
+.Item6 {background-color:#ffffff;
+    border-radius: 10px;
+    width:100px;
+    height: 50px;
+    margin: 20px auto;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: black;
+    line-height: 5px;
+    text-decoration:none;
+
+    }
+.Item7 {background-color:#ffffff;
+    border-radius: 10px;
+    width:100px;
+    height: 50px;
+    margin:5px 10px 15px 25px;
+    font-size: 5px;
+    letter-spacing: 1px;
+    color: black;
+    line-height: 5px;
+    text-decoration:none;
+
+    }
+
 .card { border: 1px solid red;
         display: inline-block;
         width: 115px;
@@ -163,6 +200,7 @@
         background-image: url('management.jpg');
         background-repeat: no-repeat;
         border: 0 solid #8F6F4A;
+
         }
 .Head {
             position: relative;
@@ -209,4 +247,36 @@
 }
 body {
     background-color: #9aabfd;
+}
+.keyto {
+
+    position:absolute;
+
+    width:200px;
+
+    /*height:115px;*/
+
+    border: 2px double #333;
+
+    background-color: #CCC;
+
+    left:-800px;
+
+    top:-600px
+
+}
+/*多選框樣式多選*/
+.abgne-menu input[type="radio"] + label {
+    display: inline-block;
+    background-color: #ccc;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 18
+}
+.abgne-menu input[type="radio"] {
+    display: none;
+}
+.abgne-menu input[type="radio"]:checked + label {
+    background-color: #f00;
+    color: #fff;
 }
