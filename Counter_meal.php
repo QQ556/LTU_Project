@@ -189,7 +189,8 @@ $passed=$_COOKIE["passed"];
          <input type="number" name="tab_text" 
          value ="<?php echo @$tab_text ?>" 
          id="quantity1" 
-         style="text-align: right; font-weight: bold; border: 1px double #000; " onclick="Setstring(this);myShow(this);" 
+         style="text-align: right; font-weight: bold; border: 1px double #000;
+         "onclick="Setstring(this);myShow(this);" 
          value="1" size="3" maxlength="4" readonly="readonly" />
 
          </label>

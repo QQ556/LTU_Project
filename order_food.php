@@ -49,11 +49,16 @@ function myClose()
 
 {
 
-  if(string.value==''){string.value = '1';}
+  if(string.value==''){string.value = '';}
 
   BBBB.innerHTML="";
 
   BBBB.style.visibility="hidden";
+
+  document.forms[0].submit();
+
+
+
 
 }
 
@@ -61,9 +66,9 @@ function Setstring(obj)
 
 {
 
-  if((BBBB.style.visibility=="visible")&&(string.value=='')){string.value = '1';}
+  if((BBBB.style.visibility=="visible")&&(string.value=='')){string.value = '0';}
 
-  if(obj.value=='1'){obj.value='';}
+  if(obj.value=='0'){obj.value='';}
 
   string = obj;
 
@@ -105,6 +110,29 @@ function ChangeString()
   var NewStringValue=document.getElementById("StringTextBox").value;
   document.getElementById("NewStringBox").innerHTML=NewStringValue;
 }
+$(function()
+ {
+      $('.hTotal').each(function(i) {
+          var hTotal = 0;
+          $(this).parent().find('td:gt(0)')
+            .each(function(i)
+            {
+                hTotal += parseInt($(this).text());
+            });
+          $(this).text(hTotal);
+      });
+      
+      $('.vTotal').each(function(i) {
+          var vTotal = 0;
+          $(this).parent().parent()
+            .find('td:nth-child(' + (i+2) +'),th:nth-child(' + (i+2) +')')
+            .each(function(i)
+            {
+                vTotal += parseInt($(this).text());
+            });
+          $(this).text(vTotal);
+      });
+ });
 
 </script>
 <?php
@@ -158,7 +186,7 @@ $passed=$_COOKIE["passed"];
          <a class="Logo" href="main.php"></a>
        </div>
        <div class="Body" style="width: 550px;float:left">
-        <form id="form1" action="" method="GET" name="myForm">
+        <form  action="" method="GET" name="myForm">
           顧客座位:<?php echo $tab_text ?>
           顧客年齡:<?php echo $select_old ?>
           顧客性別:<?php echo $select_sex ?>
@@ -169,13 +197,14 @@ $passed=$_COOKIE["passed"];
               <tr>
                 <td>類型</td>
                 <td>餐號</td>
+                <td>名稱</td>
                 <td>價錢</td>
                 <td>數量</td>
+                <td>小記</td>
               </tr>
             </thead>
 
-            <?php
-            
+            <?php            
             for($i=1;$i<=mysqli_num_rows($result);$i++){
               $rs=mysqli_fetch_row($result);
               ?>
@@ -183,40 +212,62 @@ $passed=$_COOKIE["passed"];
                 <td><?php echo $rs[0]?></td>
                 <td><?php echo $rs[1]?></td>
                 <td><?php echo $rs[2]?></td>
-                <td><input type="text" id="quantity1"  style="text-align: right; font-weight: bold; border: 1px double #000; " onclick="Setstring(this);myShow(this);" name="<?php echo $rs[1] ?>" 
-                  value=<?php echo @$_GET[$i] ?>>
-                  <input type="submit" name="add" value="+1" />
-                  <input type="submit" name="minus" value="-1" />
+                <td><?php echo $rs[3]?></td>
+                <td>
+                  <label>
+                    <input type="number" id="<?php echo "quantity".$rs[1] ?>"  
+                    style="text-align: left; font-weight: bold; border: 1px double #000; 
+                    "onclick="Setstring(this);myShow(this);" 
+                    name="<?php echo $rs[1] ?>" 
+                    value="<?php echo $_GET[$i] ?>" size="3" maxlength="4" readonly="readonly" />
+                  </label>
                 </td>
-              </tr>
-              <?php
-              
-              //印出餐點
-              if(@$_GET[$i] !="" ) {
-               @${"meun".$i} =$_GET[$i];
-             }
-             else{
-              @${"meun".$i} ="null";
-            }
-            echo ${"meun".$i};
+                <td >
+                  <!-- 小記 -->
+                  <?php 
+                  if(@$_GET[$i] >=1){
+                    echo $rs[3] * $_GET[$i];
+                  }else{
+                    echo "0";
+                  }
 
-           if(@$_GET['add']){
-              @$_GET[$i] =@$_GET[$i];
-            }
-            if(@$_GET['minus']){
-              @$_GET[$i] =@$_GET[$i]-"1" ;
-            }       
-            }
-          ?>
+                  ?></td>
+
+
+
+                </tr>
+
+                <?php
+
+              //印出餐點
+                if(@$_GET[$i] !="" ) {
+                 @${"meun".$i} =$_GET[$i]."份".$rs[2]."<br>";
+
+               }
+               echo @${"meun".$i};
+             }
+
+             ?>
+             <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+          </table>
           <input type="hidden" name="select_sex" value =<?php echo $select_sex ?>>
           <input type="hidden" name="select_old" value =<?php echo $select_old ?>> 
           <input type="hidden" name="tab_text" value =<?php echo $tab_text ?>> 
-        </table>
-        <button onclick="search() class="item5">下一步</button>
-      </form>
-    </div>
+          <div class="keyto" id="BBBB" ></div>
+          <button >下一步</button>
+        </form>
+      </div>
+      <div>123123</div>
 
-  </div>
-</body>
-</html>
+    </div>
+  </body>
+  </html>
 
