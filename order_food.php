@@ -110,29 +110,7 @@ function ChangeString()
   var NewStringValue=document.getElementById("StringTextBox").value;
   document.getElementById("NewStringBox").innerHTML=NewStringValue;
 }
-$(function()
- {
-      $('.hTotal').each(function(i) {
-          var hTotal = 0;
-          $(this).parent().find('td:gt(0)')
-            .each(function(i)
-            {
-                hTotal += parseInt($(this).text());
-            });
-          $(this).text(hTotal);
-      });
-      
-      $('.vTotal').each(function(i) {
-          var vTotal = 0;
-          $(this).parent().parent()
-            .find('td:nth-child(' + (i+2) +'),th:nth-child(' + (i+2) +')')
-            .each(function(i)
-            {
-                vTotal += parseInt($(this).text());
-            });
-          $(this).text(vTotal);
-      });
- });
+
 
 </script>
 <?php
@@ -159,19 +137,17 @@ $passed=$_COOKIE["passed"];
 
     if(@$_GET['num']!=''){
       $num = $_GET['num'];
-
-    }else{
-      $num = "";
-      echo "hi";
     }
 
-    if(@$_GET['select_sex']!='' or @$_GET['select_old']!='' or @$_GET['tab_text']!='')
+    if(@$_GET['select_sex']!='' or @$_GET['select_old']!='' or @$_GET['tab_text']!='' or @$_GET['total']!='' )
     {
       $select_sex = $_GET['select_sex'];
       $select_old = $_GET['select_old'];
       $tab_text = $_GET['tab_text'];
-    }
+      $total = $_GET['total'];
 
+    }
+      $price =array();
     ?>
 
     <!doctype html>
@@ -226,7 +202,11 @@ $passed=$_COOKIE["passed"];
                   <!-- 小記 -->
                   <?php 
                   if(@$_GET[$i] >=1){
+                    
+                    $money = $rs[3] * $_GET[$i];
+                    array_push($price,$money);
                     echo $rs[3] * $_GET[$i];
+                    
                   }else{
                     echo "0";
                   }
@@ -236,7 +216,7 @@ $passed=$_COOKIE["passed"];
 
 
                 </tr>
-
+                
                 <?php
 
               //印出餐點
@@ -254,18 +234,26 @@ $passed=$_COOKIE["passed"];
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>
+                <?php  
+                echo "總價 " . array_sum($price) . "\n";
+                echo "<br>";
+
+                ?>
+
+              </td>
             </tr>
 
           </table>
           <input type="hidden" name="select_sex" value =<?php echo $select_sex ?>>
           <input type="hidden" name="select_old" value =<?php echo $select_old ?>> 
           <input type="hidden" name="tab_text" value =<?php echo $tab_text ?>> 
+          <!-- <input type="" name="total" value =<?php echo $total ?>>  -->
           <div class="keyto" id="BBBB" ></div>
           <button >下一步</button>
         </form>
       </div>
-      <div>123123</div>
+      <div><h1>結帳明細</h1></div>
 
     </div>
   </body>
