@@ -111,7 +111,6 @@ function ChangeString()
   document.getElementById("NewStringBox").innerHTML=NewStringValue;
 }
 
-
 </script>
 <?php
 $passed=$_COOKIE["passed"];
@@ -147,7 +146,8 @@ $passed=$_COOKIE["passed"];
       $total = $_GET['total'];
 
     }
-      $price =array();
+    $price =array();
+    $meun = array();
     ?>
 
     <!doctype html>
@@ -163,8 +163,9 @@ $passed=$_COOKIE["passed"];
        </div>
        <div class="Body" style="width: 550px;float:left">
         <form  action="" method="GET" name="myForm">
-          顧客座位:<?php echo $tab_text ?>
+
           顧客年齡:<?php echo $select_old ?>
+          <?php echo "<br>"; ?>
           顧客性別:<?php echo $select_sex ?>
           <br>
 
@@ -202,7 +203,7 @@ $passed=$_COOKIE["passed"];
                   <!-- 小記 -->
                   <?php 
                   if(@$_GET[$i] >=1){
-                    
+
                     $money = $rs[3] * $_GET[$i];
                     array_push($price,$money);
                     echo $rs[3] * $_GET[$i];
@@ -224,7 +225,9 @@ $passed=$_COOKIE["passed"];
                  @${"meun".$i} =$_GET[$i]."份".$rs[2]."<br>";
 
                }
-               echo @${"meun".$i};
+               $food = @${"meun".$i};
+               array_push($meun, $food);
+
              }
 
              ?>
@@ -239,6 +242,7 @@ $passed=$_COOKIE["passed"];
                 echo "總價 " . array_sum($price) . "\n";
                 echo "<br>";
 
+
                 ?>
 
               </td>
@@ -249,11 +253,35 @@ $passed=$_COOKIE["passed"];
           <input type="hidden" name="select_old" value =<?php echo $select_old ?>> 
           <input type="hidden" name="tab_text" value =<?php echo $tab_text ?>> 
           <!-- <input type="" name="total" value =<?php echo $total ?>>  -->
-          <div class="keyto" id="BBBB" ></div>
+          <div class="keyto" id="BBBB" style="" ></div>
           <button >下一步</button>
         </form>
       </div>
-      <div><h1>結帳明細</h1></div>
+      <div class="BOX" style="height: 600PX;" style="">
+        <h2>結帳明細</h2>
+       
+        <?php echo "<br>" ?>
+        <?php
+        echo "消費金額 ： " . array_sum($price) . "\n"."<br>";
+        echo "顧客座位 ： ".$tab_text;
+        echo "<br>"."---餐點---"."<br>";
+        // print_r($meun);
+
+        foreach($meun as $key=>$value)
+        {
+          echo $value."\n";
+        }
+        echo "---餐點結束---";
+        ?>
+      </div>
+
+      <div class="box" style="float: left;">
+        <h2>結帳明細</h2>
+
+        sadsdsad
+        sadsa
+
+      </div>
 
     </div>
   </body>
