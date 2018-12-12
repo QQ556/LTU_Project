@@ -111,6 +111,7 @@ function ChangeString()
   document.getElementById("NewStringBox").innerHTML=NewStringValue;
 }
 
+
 </script>
 <?php
 $passed=$_COOKIE["passed"];
@@ -134,20 +135,30 @@ $passed=$_COOKIE["passed"];
     $total_records=mysqli_num_rows($result);  // 取得記錄數
 
 
-    if(@$_GET['num']!=''){
-      $num = $_GET['num'];
-    }
+    $num = 0;
 
-    if(@$_GET['select_sex']!='' or @$_GET['select_old']!='' or @$_GET['tab_text']!='' or @$_GET['total']!='' )
+    if(@$_GET['select_sex']!='' 
+      or @$_GET['select_old']!='' 
+      or @$_GET['tab_num']!='' 
+      or @$_GET['total']!='' 
+      or @$_GET['nun']!='' 
+    )
     {
       $select_sex = $_GET['select_sex'];
       $select_old = $_GET['select_old'];
-      $tab_text = $_GET['tab_text'];
-      $total = $_GET['total'];
-
+      $tab_num = $_GET['tab_num'];
+      @$total = $_GET['total'];
+      @$num = $_GET['num'];
+    }
+    else
+    {
+      $num = 0;
     }
     $price =array();
     $meun = array();
+    $meun_2 = array();
+    // 開始 session 
+    session_start(); 
     ?>
 
     <!doctype html>
@@ -157,133 +168,198 @@ $passed=$_COOKIE["passed"];
       <meta charset="utf-8">
     </head>
     <body>
-      <div id="Base_Visitor" style="width: 1400px">
+      <div id="Base_Visitor" style="width: 1400px;">
         <div class="Head">
          <a class="Logo" href="main.php"></a>
        </div>
-       <div class="Body" style="width: 550px;float:left">
-        <form  action="" method="GET" name="myForm">
-
-          顧客年齡:<?php echo $select_old ?>
-          <?php echo "<br>"; ?>
-          顧客性別:<?php echo $select_sex ?>
-          <br>
-
-          <table width="100%" border="1" class="order-table" style="font-size: 15" >
-            <thead>
-              <tr>
-                <td>類型</td>
-                <td>餐號</td>
-                <td>名稱</td>
-                <td>價錢</td>
-                <td>數量</td>
-                <td>小記</td>
-              </tr>
-            </thead>
-
-            <?php            
-            for($i=1;$i<=mysqli_num_rows($result);$i++){
-              $rs=mysqli_fetch_row($result);
-              ?>
-              <tr>
-                <td><?php echo $rs[0]?></td>
-                <td><?php echo $rs[1]?></td>
-                <td><?php echo $rs[2]?></td>
-                <td><?php echo $rs[3]?></td>
-                <td>
-                  <label>
-                    <input type="number" id="<?php echo "quantity".$rs[1] ?>"  
-                    style="text-align: left; font-weight: bold; border: 1px double #000; 
-                    "onclick="Setstring(this);myShow(this);" 
-                    name="<?php echo $rs[1] ?>" 
-                    value="<?php echo $_GET[$i] ?>" size="3" maxlength="4" readonly="readonly" />
-                  </label>
-                </td>
-                <td >
-                  <!-- 小記 -->
-                  <?php 
-                  if(@$_GET[$i] >=1){
-
-                    $money = $rs[3] * $_GET[$i];
-                    array_push($price,$money);
-                    echo $rs[3] * $_GET[$i];
-                    
-                  }else{
-                    echo "0";
-                  }
-
-                  ?></td>
+       <div class="Body" style="width: 1400px;">
 
 
-
+        <div style="float:left;width: 600px;height:550px;">
+          <form  action="" method="GET" name="myForm">
+            <table width="100%" border="1" class="order-table" style="font-size: 15" >
+              <thead>
+                <tr>
+                  <td>類型</td>
+                  <td>餐號</td>
+                  <td>名稱</td>
+                  <td>價錢</td>
+                  <td>數量</td>
+                  <td>小記</td>
                 </tr>
-                
-                <?php
+              </thead>
 
-              //印出餐點
-                if(@$_GET[$i] !="" ) {
-                 @${"meun".$i} =$_GET[$i]."份".$rs[2]."<br>";
+              <?php            
+              for($i=1;$i<=mysqli_num_rows($result);$i++){
+                $rs=mysqli_fetch_row($result);
+                ?>
+                <tr>
+                  <td><?php echo $rs[0]?></td>
+                  <td><?php echo $rs[1]?></td>
+                  <td><?php echo
+                  $i.".  ".$rs[2]?></td>
+                  <td><?php echo $rs[3]?></td>
+                  <td>
+                    <label>
+                      <input type="number" id="<?php echo "quantity".$rs[1] ?>"  
+                      style="float: left;text-align: left; font-weight: bold; border: 1px double #000; 
+                      "onclick="Setstring(this);myShow(this);" 
+                      name="<?php echo $rs[1] ?>" 
+                      value="<?php echo $_GET[$i] ?>" size="3" maxlength="4" readonly="readonly" />
+                    </label>
+                  </td>
+                  <td >
+                    <!-- 小記 -->
+                    <?php 
+                    if(@$_GET[$i] >=1){
+
+                      $money = $rs[3] * $_GET[$i];
+                      array_push($price,$money);
+                      echo $rs[3] * $_GET[$i];
+
+                    }else{
+                      echo "0";
+                    }
+
+                    ?></td>
+
+
+
+                  </tr>
+
+                  <?php
+
+              //存陣列
+                  if(@$_GET[$i] !="" ) {
+                   @${"meun".$i} =$_GET[$i]."份".$rs[2]."<br>";
+                 }
+
+                 $food = @${"meun".$i};
+                 array_push($meun, $food);
+              //轉頁用陣列
+                 if(@$_GET[$i] !="" ) {
+                   @${"meun_2".$i} =$_GET[$i];
+                 }
+
+                 $food = @${"meun_2".$i};
+                 array_push($meun_2, $food);
+                 $_SESSION['num'] = $meun_2; 
+
 
                }
-               $food = @${"meun".$i};
-               array_push($meun, $food);
 
+
+               ?>
+               <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <?php  
+                  echo "總價 " . array_sum($price) . "\n";
+                  echo "<br>";
+
+
+                  ?>
+
+                </td>
+              </tr>
+
+            </table>
+            <input type="hidden" name="select_sex" value =<?php echo $select_sex ?>>
+            <input type="hidden" name="select_old" value =<?php echo $select_old ?>> 
+            <input type="hidden" name="tab_num" value =<?php echo $tab_num ?>> 
+            <!-- <input type="" name="total" value =<?php echo $total ?>>  -->
+            <div class="keyto" id="BBBB" style="" ></div>
+            
+          </div>
+
+          <div class="BOX" style="height: 550px;float: left">
+            <h2>明細</h2>
+
+            <?php echo "<br>" ?>
+            <?php
+            echo "消費金額 ： " . array_sum($price) . "\n"."<br>";
+            echo "顧客座位 ： ".$tab_num;
+            echo "<br>"."---餐點---"."<br>";
+
+            foreach($meun as $key=>$value)
+            {
+              echo $value."\n";
+            }
+            echo "---餐點結束---";
+            ?>
+          </div>
+
+          <div style="float: left;border: 1px solid #cccccc;">
+            <h2>結帳</h2>
+            顧客年齡:<?php echo $select_old ?>
+            <?php echo " / "; ?>
+            顧客性別:<?php echo $select_sex ?>
+            <?php echo "<br>"; ?>
+
+            <?php echo "消費金額 ： " . array_sum($price) . "\n"."<br>"; ?>
+
+            <?php echo "現金支付 ： "?>
+
+            <label>
+              <input type="num" name="num" style="text-align: left; font-weight: bold; border: 1px double #000;"  
+              onclick="Setstring(this);myShow(this);"  
+              size="3" maxlength="4" readonly="readonly"
+              value= <?php 
+
+              if ($num>0) {
+               echo $num;
              }
+             else
+             {
+              $num=0;
+              echo "0";
+            };
+            ?>>
+          </label>
+          <input type="submit" name="num" value=<?php echo array_sum($price);?>>
+          <br>
+          <?php echo "找零 ： "?>
+          <?php echo ($num-array_sum($price)); ?>
+          <?php echo "<br><br><br><br>"; ?> 
+          <?php 
+          
+          $baseUrl = 'Cashupdata.php?';
+          $queries = [
+            'select_sex' =>$select_sex ,
+            'select_old' =>$select_old,
+            'tab_num' => $tab_num,
+            'total' => array_sum($price),
+          ];
+          
 
-             ?>
-             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <?php  
-                echo "總價 " . array_sum($price) . "\n";
-                echo "<br>";
 
+          $url = $baseUrl . http_build_query($queries);
+          $price_all= array_sum($price);
+          ?>
 
-                ?>
-
-              </td>
-            </tr>
-
-          </table>
-          <input type="hidden" name="select_sex" value =<?php echo $select_sex ?>>
-          <input type="hidden" name="select_old" value =<?php echo $select_old ?>> 
-          <input type="hidden" name="tab_text" value =<?php echo $tab_text ?>> 
-          <!-- <input type="" name="total" value =<?php echo $total ?>>  -->
-          <div class="keyto" id="BBBB" style="" ></div>
-          <button >下一步</button>
-        </form>
+          
+          <a class="Item5" 
+          style="font-size: 140px;letter-spacing: 50px;background-color: #4caf50;" 
+          align="center" 
+          onClick="check_data()"
+          href=<?php echo $url ?>
+          >收銀</a>
+          <br>
+          <a class="Item5" style="font-size: 140px;letter-spacing: 50px;" align="center" href="Cash.php?">返回</a>
+          
+        
       </div>
-      <div class="BOX" style="height: 600PX;" style="">
-        <h2>結帳明細</h2>
-       
-        <?php echo "<br>" ?>
-        <?php
-        echo "消費金額 ： " . array_sum($price) . "\n"."<br>";
-        echo "顧客座位 ： ".$tab_text;
-        echo "<br>"."---餐點---"."<br>";
-        // print_r($meun);
+      <!--  -->
 
-        foreach($meun as $key=>$value)
-        {
-          echo $value."\n";
-        }
-        echo "---餐點結束---";
-        ?>
-      </div>
 
-      <div class="box" style="float: left;">
-        <h2>結帳明細</h2>
-
-        sadsdsad
-        sadsa
-
-      </div>
-
+</form>
     </div>
-  </body>
-  </html>
+
+  </div>
+</body>
+</html>
 

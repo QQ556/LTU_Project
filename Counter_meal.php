@@ -100,6 +100,16 @@ function  myClean()
  string.value="";   
 
 } 
+ function check_data()
+      {
+        if (document.myForm.tab_num.value.length == 0)
+        {
+          alert("「桌號」一定要填寫哦...");
+          return false;
+        }
+        myForm.submit();  
+
+      }
 
 </script>
 <?php
@@ -124,10 +134,10 @@ $passed=$_COOKIE["passed"];
     $total_records=mysqli_num_rows($result);  // 取得記錄數
 
 
-    if(@$_GET['select_sex']!='' or @$_GET['select_old']!='' or @$_GET['tab_text']!=''){
+    if(@$_GET['select_sex']!='' or @$_GET['select_old']!='' or @$_GET['tab_num']!=''){
     $select_sex = $_GET['select_sex'];
     $select_old = $_GET['select_old'];
-    $tab_text = $_GET['tab_text'];
+    $tab_num = $_GET['tab_num'];
    }else{
     echo "hi";
    }
@@ -186,8 +196,8 @@ $passed=$_COOKIE["passed"];
          <h3>請輸入座位</h3>
          <hr/>
          <label>
-         <input type="number" name="tab_text" 
-         value ="<?php echo @$tab_text ?>" 
+         <input type="number" name="tab_num" 
+         value ="<?php echo @$tab_num ?>" 
          id="quantity1" 
          style="text-align: right; font-weight: bold; border: 1px double #000;
          "onclick="Setstring(this);myShow(this);" 
@@ -196,7 +206,7 @@ $passed=$_COOKIE["passed"];
          </label>
          <div class="keyto" id="BBBB"></div>
          <br><br><br><br><br>
-         <button onclick="search() class="item5">下一步</button>
+         <input type="button" value="下一步" onclick="check_data()" >
        </div> 
      </form>
 
