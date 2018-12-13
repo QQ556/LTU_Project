@@ -289,7 +289,7 @@ $passed=$_COOKIE["passed"];
             {
               echo $value."\n";
             }
-            echo "---餐點結束---";
+            echo "---結束---";
             ?>
           </div>
 

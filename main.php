@@ -99,9 +99,6 @@ $passed=$_COOKIE["passed"];
     						<li><a href="Employee.php">員工管理</a>
     						</li>
     						<li><a href="Working_hours.php">工時管理</a>
-    						</li>
-    						<li><a href="/">公告管理</a>
-    						</li>
     					</ul>
     				</li>
     				<li><a href="#">我的帳戶<span class="arrow-indicator"><i class="fa fa-angle-down"></i></span></a>

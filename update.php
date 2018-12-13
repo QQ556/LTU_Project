@@ -30,10 +30,10 @@
     $email = $_POST["email"];
     $comment = $_POST["comment"];
     $position = $_POST["position"];
-
+    $open_account = $_POST["open_account"];
     $take_office_date = $_POST["take_office_date"];
     $leave_office_date = $_POST["leave_office_date"];
-		
+		$open_account = $_POST["open_account"];   
     //建立資料連接
     $link = create_connection();
 				
@@ -52,7 +52,8 @@
             comment = '$comment',
             position = '$position',
             take_office_date = '$take_office_date',
-            leave_office_date = '$leave_office_date'
+            leave_office_date = '$leave_office_date',
+            open_account ='$open_account'
             WHERE id = $id";
     $result = execute_sql($link, "member", $sql);
 		

@@ -4,7 +4,6 @@
   $account = $_POST["account"];
   $password = $_POST["password"]; 
   $name = $_POST["name"]; 
-  $Store=$_POST["Store"];
   $sex = $_POST["sex"];
   $year = $_POST["year"]; 
   $month = $_POST["month"]; 
@@ -15,7 +14,9 @@
   $email = $_POST["email"]; 	
   $comment = $_POST["comment"];
   $position = $_POST["position"];
-
+  $take_office_date = $_POST["take_office_date"];
+  $leave_office_date = $_POST["leave_office_date"];     
+  $open_account = $_POST["open_account"];   
   //建立資料連接
   $link = create_connection();
 			
@@ -43,8 +44,11 @@
     mysqli_free_result($result);
 		
     //執行 SQL 命令，新增此帳號
-    $sql = "INSERT INTO users (account, password, name,Store, sex,year, month, day, telephone, cellphone, address,email,comment,position) 
-                      VALUES ('$account','$password','$name','$Store','$sex', $year, $month, $day,'$telephone','$cellphone','$address','$email','$comment','$position')";
+    $sql = "INSERT INTO 
+    users 
+    (account, password, name, sex,year, month, day, telephone, cellphone, address,email,comment,position,take_office_date,leave_office_date,open_account) 
+ VALUES 
+    ('$account','$password','$name','$sex', $year, $month, $day,'$telephone','$cellphone','$address','$email','$comment','$position','$take_office_date','$leave_office_date','$open_account')";
 
     $result = execute_sql($link, "member", $sql);
     echo"<script>alert('新增帳號成功');history.go(-1);</script>"; 

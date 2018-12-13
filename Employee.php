@@ -98,10 +98,7 @@ $passed=$_COOKIE["passed"];
     $total_fields=mysqli_num_fields($result); // 取得欄位數
     $total_records=mysqli_num_rows($result);  // 取得記錄數
     ?>
-    測試用總記錄數<?php echo "$total_fields"; ?>
-    測試用總欄位數<?php echo "$total_records"; ?>
-
-    <!doctype html>
+ <!doctype html>
     <html>
     <head>
       <title>會員管理</title>
@@ -114,7 +111,7 @@ $passed=$_COOKIE["passed"];
         </div>
         <div class="Body">
           <div class="NavPanel">
-            <a class="Item" href="join.html" target="_top">新增員工</a>      
+            <a class="Item4" style="font-size: 50px;background: #0a4cff" href="join.php" target="_top">新增員工</a>      
           </div>
           <div class="post">
             搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">  
@@ -135,6 +132,9 @@ $passed=$_COOKIE["passed"];
                 <td>地址</td>
                 <td>電子信箱</td>
                 <td>備註</td>
+                <td>開通</td>
+                <td>入職日</td>
+                <td>離職日</td>
                 <td>修改</td>
               </tr>
             </thead>
@@ -157,6 +157,9 @@ $passed=$_COOKIE["passed"];
                 <td><?php echo $rs[12]?></td>
                 <td><?php echo $rs[13]?></td>
                 <td><?php echo $rs[14]?></td>
+                <td><?php echo $rs[15]?></td>
+                <td><?php echo $rs[16]?></td>
+                <td><?php echo $rs[17]?></td>
                 <td><a href="modify-table.php?code=<?php echo $rs[0]?>" >修改</a>
                   <a href='join.html'onclick="return confirm('確定刪除嗎')">刪除</a>
                 </td>

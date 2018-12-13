@@ -175,7 +175,7 @@ $passed=$_COOKIE["passed"];
 
           <form>
           </div>
-          <div  id="DIV1">
+          <div  id="DIV1" style="width: 650px">
             <table width="100%" border="1" class="order-table" align="right">
               <h1 align="center">月打卡表</h1>
               <?php echo "員工名稱：".$rs_user[3];
@@ -256,8 +256,8 @@ $passed=$_COOKIE["passed"];
     ?>
   </table>
 </div>
-<div id="DIV2" style="float: right;">
-  <table width="100%" border="1" class="order-table" align="center">
+<div id="DIV2" style="float: right;width: 410px">
+  <table width="100%" border="1" class="order-table" align="center" style="font-size: 22px">
     <h1 align="center">日打卡表</h1>
         <br>
         <br>
