@@ -336,30 +336,55 @@ $passed=$_COOKIE["passed"];
           ];
           
 
-
+          
           $url = $baseUrl . http_build_query($queries);
           $price_all= array_sum($price);
           ?>
+          <script type="text/javascript">
+            function check_data()
+            {
+              var a = <?php echo ($num-array_sum($price)); ?>;
+              var b = <?php echo array_sum($price); ?>;
 
-          
-          <a class="Item5" 
-          style="font-size: 140px;letter-spacing: 50px;background-color: #4caf50;" 
-          align="center" 
-          onClick="check_data()"
-          href=<?php echo $url ?>
-          >收銀</a>
-          <br>
-          <a class="Item5" style="font-size: 140px;letter-spacing: 50px;" align="center" href="Cash.php?">返回</a>
-          
-        
-      </div>
-      <!--  -->
+              if (a < 0) {
+
+                console.log("找零為零");
+                alert("請輸入正確的「現金支付」");
+                return false;
+              } 
+              if (b == 0) {
+
+                console.log("沒點餐");
+                alert("您還未沒點餐");
+                return false;
+              } 
+
+              else {
+                location.href="<?php echo $url ?>";
+               
+             }
+
+           }
+
+         </script>
+
+         <a class="Item5" 
+         style="font-size: 140px;letter-spacing: 50px;background-color: #4caf50;" 
+         align="center" 
+         onClick="check_data()"
+         >收銀</a>
+         <br>
+         <a class="Item5" style="font-size: 140px;letter-spacing: 50px;" align="center" href="Cash.php?">返回
+         </a>
 
 
-</form>
-    </div>
+       </div>
 
-  </div>
+
+     </form>
+   </div>
+
+ </div>
 </body>
 </html>
 

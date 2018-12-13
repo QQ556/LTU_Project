@@ -61,9 +61,9 @@ $passed = $_COOKIE["passed"];
 
 
   	$sql = "INSERT INTO orders 
-  	(order_id, meal, quantity,tab_num, `date`,total_price, select_old,pay,meals_name) 
+  	(order_id, meal, quantity,tab_num, `date`,total_price, select_old,select_sex,pay,meals_name) 
   	VALUES 
-  	('$order_id_rs[0]','$key','$value','$tab_num','$date2', $total, '$select_old','1','$rs_meal_name[2]')";
+  	('$order_id_rs[0]','$key','$value','$tab_num','$date2', $total, '$select_old','$select_sex','1','$rs_meal_name[2]')";
   	 // 執行 UPDATE 陳述式來更新使用者資料
   // $sql = "UPDATE `orders` SET 
   // `order_id` = '$order_id_rs[0]',

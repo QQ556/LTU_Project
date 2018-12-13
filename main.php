@@ -94,7 +94,7 @@ $passed=$_COOKIE["passed"];
     			<ul class="drop-down-menu">
     				<li><a href="#">管理功能<span class="arrow-indicator"><i class="fa fa-angle-down"></i></span></a>
     					<ul>
-    						<li><a href="/" >營業管理</a>
+    						<li><a href="business.php" >營業管理</a>
     						</li>
     						<li><a href="Employee.php">員工管理</a>
     						</li>
@@ -169,8 +169,8 @@ $passed=$_COOKIE["passed"];
     			</div>
     			<div  style="margin-left: 30px;margin-top: 0;float:left;background:#ffffff;width:540px;">
     				<h3>收銀功能</h3>
-    				<a class="Item5" align="center" href="Cash.php?code=<?php echo $row{"id"} ?>">收銀</a>
-
+    				<a class="Item5" align="center" href="Cash.php?code=<?php echo $row{"id"} ?>">結帳</a>
+					<a class="Item5" style="background-color:#0a4cff"align="center" href="Counter_meal.php?code=<?php echo $id ?>">點餐</a>
 
     			</div>
     		</div>

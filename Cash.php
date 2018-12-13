@@ -2,80 +2,115 @@
 
 <style type="text/css">
 @import url(css.css);
-tr:nth-child(even) {
-  background: #CCC
-}
-tr:nth-child(odd) {
-  background-color: #FAFAFA;
-}
-/*td:hover {
-    background-color: #E6FBFF;
-    }*/
-    tr, td {
-      border: 0px solid #666;
-    }
-    .post input[type=search]{
-      padding: 10px;
-      background: #fafafa;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      font-size: 1rem;
-      color: #111;
-    }
-    .post{
-      padding: 5px;
-      background: #cccccc;
-      border: 1px solid #ddd;
-      border-radius: 2px;
-      font-size: 1rem;
-      color: #111;
-    }
   </style>
-  <script type="text/javascript">
-    (function(document) {
-      'use strict';
+<script type="text/javascript">   
 
-  // 建立 LightTableFilter
-  var LightTableFilter = (function(Arr) {
+//小鍵盤部分程式------
 
-    var _input;
+function myShow(obj) 
 
-    // 資料輸入事件處理函數
-    function _onInputEvent(e) {
-      _input = e.target;
-      var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-      Arr.forEach.call(tables, function(table) {
-        Arr.forEach.call(table.tBodies, function(tbody) {
-          Arr.forEach.call(tbody.rows, _filter);
-        });
-      });
-    }
+{  
 
-    // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
-    function _filter(row) {
-      var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-    }
+ var BBBB=document.getElementById('BBBB');
 
-    return {
-      // 初始化函數
-      init: function() {
-        var inputs = document.getElementsByClassName('light-table-filter');
-        Arr.forEach.call(inputs, function(input) {
-          input.oninput = _onInputEvent;
-        });
+ var i;
+
+ var str = "";  
+
+ //產生數字
+
+ for(i = 0 ; i < 10 ; i++)   
+
+ {
+
+  str+="<input type='button' onclick='myAdd(this.value);' value='"+i+"' style='FONT-SIZE:16pt; HEIGHT:40px; WIDTH:40px; font-weight:bold;' />"; 
+
+  if(i==4){str += "<br>";}
+
+}
+
+str += "<br><input type='button' onclick='myDelete()' value='刪 除' style='FONT-SIZE:11pt; HEIGHT:35px; WIDTH:65px;' /><input type='button' onclick='myClean()' value='清 除' style='FONT-SIZE:11pt; HEIGHT:35px; WIDTH:65px; ' /><input type='button' onclick='myClose()' value='關 閉' style='FONT-SIZE:11pt; HEIGHT:35px; WIDTH:65px; ' />";
+
+if((event.clientY+1000)>'450'){BBBB.style.top=(event.clientY-130)+'px';}else{BBBB.style.top=(event.clientY+10)+'px';}
+
+ //alert(event.clientY+10);
+
+ BBBB.style.left=(event.clientX-120)+'px';
+
+ //alert(obj.offsetParent);
+
+ BBBB.innerHTML=str;
+
+ BBBB.style.visibility="visible";
+
+}   
+
+function myClose()
+
+{
+
+  if(string.value==''){string.value = '1';}
+
+  BBBB.innerHTML="";
+
+  BBBB.style.visibility="hidden";
+
+}
+
+function Setstring(obj)
+
+{
+
+  if((BBBB.style.visibility=="visible")&&(string.value=='')){string.value = '1';}
+
+  if(obj.value=='1'){obj.value='';}
+
+  string = obj;
+
+}
+
+function  myAdd(s)   
+
+{
+
+ //var txt=document.getElementById(obj.id);
+
+ if(string.value.length<4){
+
+   string.value += s;}
+
+ } 
+
+ function  myDelete()   
+
+ {
+
+ //var txt=document.getElementById(obj.id);
+
+ string.value=string.value.substr(0,string.value.length-1);   
+
+}  
+
+function  myClean()   
+
+{
+
+ //var txt=document.getElementById(obj.id);
+
+ string.value="";   
+
+} 
+ function check_data()
+      {
+        if (document.myForm.tab_num.value.length == 0)
+        {
+          alert("「桌號」一定要填寫哦...");
+          return false;
+        }
+        myForm.submit();  
+
       }
-    };
-  })(Array.prototype);
 
-  // 網頁載入完成後，啟動 LightTableFilter
-  document.addEventListener('readystatechange', function() {
-    if (document.readyState === 'complete') {
-      LightTableFilter.init();
-    }
-  });
-
-})(document);
 </script>
 <?php
 $passed=$_COOKIE["passed"];
@@ -97,51 +132,91 @@ $passed=$_COOKIE["passed"];
     //$row = mysqli_fetch_assoc($result); //將陣列以數字排列索引
     $total_fields=mysqli_num_fields($result); // 取得欄位數
     $total_records=mysqli_num_rows($result);  // 取得記錄數
-    ?>
 
-    <!doctype html>
-    <html>
-    <head>
-      <title>會員管理</title>
-      <meta charset="utf-8">
-    </head>
-    <body>
-      <div id="Base_Visitor" style="width: 1400px">
-        <div class="Head">
-         <a class="Logo" href="main.php"></a>
+
+    if(@$_GET['select_sex']!='' or @$_GET['select_old']!='' or @$_GET['tab_num']!=''){
+    $select_sex = $_GET['select_sex'];
+    $select_old = $_GET['select_old'];
+    $tab_num = $_GET['tab_num'];
+   }else{
+    echo "hi";
+   }
+   ?>
+
+   <!doctype html>
+   <html>
+   <head>
+    <title>會員管理</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="Base_Visitor" style="width: 1400px">
+      <div class="Head">
+       <a class="Logo" href="main.php"></a>
+     </div>
+       <div class="Body" style="width: 550px;float:left">
+        <div class="abgne-menu">
+          
+         <h2>來客分析</h2>
+         
+         <h3>性別</h3>
+         
+         <form id="form1" action="order_food.php" method="GET" name="myForm">
+         <input type="radio" id="male" name="select_sex" value="男性" checked>
+         <label for="male">男性</label>
+ 
+         <input type="radio" id="female" name="select_sex" value="女性">
+         <label for="female">女性</label>
+         <hr/>
+         
+         <h3>年齡</h3>
+  
+         <input type="radio" id="20_old" name="select_old" value="20_old" checked>
+         <label for="20_old">20歲以下</label>
+         
+ 
+         <input type="radio" id="20_25_old" name="select_old" value="20_25_old">
+         <label for="20_25_old">20歲到25歲</label>
+
+         <input type="radio" id="25_30_old" name="select_old" value="25_30_old">
+         <label for="25_30_old">25歲到30歲</label>
+ 
+         <input type="radio" id="30_40_old" name="select_old" value="30_40_old">
+         <label for="30_40_old">30歲到40歲</label>
+
+         <input type="radio" id="40_old" name="select_old" value="40_old">
+         <label for="40_old">40歲以上</label>
+         <hr/>
+
+
+         </div>
        </div>
        <div class="Body" style="width: 550px;float:left">
-         <h2>來客分析</h2>
-         <h3>性別</h3>
+         <h2>座位選擇</h2>
+         <h3>請輸入座位</h3>
          <hr/>
-         <input type="submit" name="select_day" class=item6 value = 男>
-         <input type="submit" name="select_day" class=item6 value = 女>
-         <h3>年齡</h3>
-         <hr/>
-         <input type="submit" name="select_day" class=item6 value = 20歲以下>
-         <input type="submit" name="select_day" class=item6 value = 20歲到25歲>
-         <input type="submit" name="select_day" class=item6 value = 25歲到30歲>
-         <input type="submit" name="select_day" class=item6 value = 30歲到40歲>
-         <input type="submit" name="select_day" class=item6 value = 40歲以上>
-         
-       </div>
-       <div class="Body" style="float:left;width: 750px">
-         <h2>點餐畫面</h2>
-         <h3>搜尋點單</h3>
-         <hr/>
-         <br>
-         <h3>櫃台點單</h3>
-         <a class="Item5" align="center" href="Counter_meal.php?code=<?php echo $id ?>">點餐</a>
-         <hr/>
-       </div>
+         <label>
+         <input type="number" name="tab_num" 
+         value ="<?php echo @$tab_num ?>" 
+         id="quantity1" 
+         style="text-align: right; font-weight: bold; border: 1px double #000;
+         "onclick="Setstring(this);myShow(this);" 
+         value="1" size="3" maxlength="4" readonly="readonly" />
+
+         </label>
+         <div class="keyto" id="BBBB"></div>
+         <br><br><br><br><br>
+         <input type="button" value="下一步" onclick="check_data()" >
+       </div> 
+     </form>
 
 
 
-      
-      </div>
-    </div>
 
-  </div>
+   </div>
+ </div>
+
+</div>
 </body>
 </html>
 
